@@ -26,6 +26,58 @@ module.exports.index = async (request, response) => {
 }
 
 
-module.exports.store = (request, response) => {
-    console.log(request.body); 
+module.exports.store = async (request, response) => {
+    try{
+        let {name,description,status} = request.body;
+        const categoryForm = await Category.create({ name , description,status });
+        response.send(success(categoryForm,'category created successfully',201)); 
+    }catch(exception) {
+        console.log(exception)
+        response.send(error(exception.message)); 
+    }
+}
+
+module.exports.edit = async (request, response) => {
+    try{
+        let category = await Category.findOne({
+            where : {
+                id : request.params.id
+            }
+        });
+        response.send(success(category,'category fetched successfully')); 
+    }catch(exception) {
+        console.log(exception)
+        response.send(error(exception.message)); 
+    }
+}
+
+module.exports.update = async (request, response) => {
+    try{
+        let {name,description,status} = request.body;
+        const categoryForm = await Category.update({ name , description,status },{
+            where : {
+                id : request.params.id
+            }
+        });
+        response.send(success(categoryForm,'category updated successfully',201)); 
+    }catch(exception) {
+        console.log(exception)
+        response.send(error(exception.message)); 
+    }
+}
+
+
+module.exports.destroy = async (request, response) => {
+    try{
+    
+        const categoryForm = await Category.destroy({
+            where : {
+                id : request.params.id
+            }
+        });
+        response.send(success(categoryForm,'category deleted successfully',204)); 
+    }catch(exception) {
+        console.log(exception)
+        response.send(error(exception.message)); 
+    }
 }
