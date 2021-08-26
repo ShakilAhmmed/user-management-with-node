@@ -1,0 +1,138 @@
+{
+	"variables": [],
+	"info": {
+		"name": "UserManageForm",
+		"_postman_id": "ca639675-3034-33d9-0c4e-4b1271d29e80",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/categories",
+			"request": {
+				"url": "http://localhost:3000/categories",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMWZmZWRjMmYxOWU4YmJkOGM1ZDY5MWNlMDIyNTcwMDk2M2NlNmI3MGJjYTAwNmExYTNjOTYyZGY5ZDBhYjkyNTBkOTkyZjE5OTgxMWEyZTQiLCJpYXQiOjE2Mjk2MDYzNTIuMzcxMzc4LCJuYmYiOjE2Mjk2MDYzNTIuMzcxMzkyLCJleHAiOjE2NjExNDIzNTIuMzQ3MzUyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Dcduxk4tUeGDZgJpoLDgClXyc4LSx7-woG_71QPZJLpUZeQuxWYjM4pyzl8JMLfw7cLvI1CDVnSifeHGcYGZaHrnAUz-2qpJEzXDGkL8gTyWjfgc1QjUBiMfc91re-bbbRVDYlRW9tMdcMlwN3r0Yh70Ij1WduD6tKOUR_lUZujORgDDjFK1taqjWh4XExNWeuftZIkYJ-qqUhU--jqB05jsaDqM2zPqMJthzWR6hVweYBuLFzRLfq9DtXj7goLe9uSqdYEwS2-ybDh3wiQRLo9Gcmj2O95K9Cbqx--TCH9SOObfJ57RoMeImX8MItIdgAQp0EErp5KkVU1nIGaqgMZJXqJwRISu0QQNhxIllKaOQdHfLDx_DfaNTDlAcy61yLSWgR7koSWA_-ie0XpjbE61jdumd1JOGuXT_GUVD3LLNRNKOzT6WmrLx_hstvlql1ccHWnqkazGr766Sfhn4orckzumRMAlpcZN9fXmGNm8H5GDGcnECu9q91GoBWebrEACSAwwhuiYx8iNe0YYvGStfDp5tPYIGmM2VTW9DLXw3Xf9Dp1PB3bQJGbxIBXuNc09Fkb95EPLGaSyTs8dzNpndOt-ySZH1RARlvBAnzp6w9rc0IBqC7FG4PkorKwa_J8TR0MefEMHoZy0dGjq-E_yhYuG76AE7VfU3DDKcew",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/categories",
+			"request": {
+				"url": "http://localhost:3000/categories",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Category6",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Category6",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "0",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/categories/2",
+			"request": {
+				"url": "http://localhost:3000/categories/2",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/categories/1",
+			"request": {
+				"url": "http://localhost:3000/categories/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Category1Update",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Category1Update",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/categories/3",
+			"request": {
+				"url": "http://localhost:3000/categories/3",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
