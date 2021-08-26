@@ -1,6 +1,6 @@
 const {Category} = require('../models/index');
 const {success,error} = require('../helpers/apiResponse')
-
+const { body , validationResult } = require('express-validator')
 
 module.exports.index = async (request, response) => {
 
@@ -28,6 +28,11 @@ module.exports.index = async (request, response) => {
 
 module.exports.store = async (request, response) => {
     try{
+        const errors = validationResult(request);
+        if (!errors.isEmpty()) {
+            response.status(422).json({ errors: errors.array() });
+            return;
+        }
         let {name,description,status} = request.body;
         const categoryForm = await Category.create({ name , description,status });
         response.send(success(categoryForm,'category created successfully',201)); 
@@ -80,4 +85,13 @@ module.exports.destroy = async (request, response) => {
         console.log(exception)
         response.send(error(exception.message)); 
     }
+}
+
+
+module.exports.validation = () => {
+    return [
+        body('name','Name is Required').exists(),
+        body('description','Description is Required').exists(),
+        body('status','Status is Required').exists(),
+    ];
 }
