@@ -3,20 +3,9 @@ const { success, error } = require('../helpers/apiResponse');
 const { body, validationResult } = require('express-validator');
 
 module.exports.index = async (request, response) => {
-  // Category.findAll()
-  // .then(data => {
-  //     response.send(data);
-  // })
-  // .catch(err => {
-  //     response.status(500).send({
-  //     message:
-  //       err.message || "Some error occurred while retrieving tutorials."
-  //   });
-  // });
-
   try {
-    let categories = await Category.findAll({ include: SubCategory });
-    response.status(200).send(success(categories, 'categories fetched successfully'));
+    let subCategories = await SubCategory.findAll({ include: Category });
+    response.status(200).send(success(subCategories, 'sub-categories fetched successfully'));
   } catch (exception) {
     console.log(exception);
     response.send(error(exception.message));
@@ -30,9 +19,9 @@ module.exports.store = async (request, response) => {
       response.status(422).json({ errors: errors.array() });
       return;
     }
-    let { name, description, status } = request.body;
-    const categoryForm = await Category.create({ name, description, status });
-    response.status(201).send(success(categoryForm, 'category created successfully', 201));
+    let { name, category_id, description, status } = request.body;
+    const subCategoryForm = await SubCategory.create({ name, category_id, description, status });
+    response.status(201).send(success(subCategoryForm, 'sub-category created successfully', 201));
   } catch (exception) {
     console.log(exception);
     response.send(error(exception.message));
@@ -41,12 +30,15 @@ module.exports.store = async (request, response) => {
 
 module.exports.edit = async (request, response) => {
   try {
-    let category = await Category.findOne({
-      where: {
-        id: request.params.id
+    let subCategory = await SubCategory.findOne(
+      { include: Category },
+      {
+        where: {
+          id: request.params.id
+        }
       }
-    });
-    response.send(success(category, 'category fetched successfully'));
+    );
+    response.send(success(subCategory, 'sub-category fetched successfully'));
   } catch (exception) {
     console.log(exception);
     response.send(error(exception.message));
@@ -60,16 +52,17 @@ module.exports.update = async (request, response) => {
       response.status(422).json({ errors: errors.array() });
       return;
     }
-    let { name, description, status } = request.body;
-    const categoryForm = await Category.update(
-      { name, description, status },
+
+    let { name, category_id, description, status } = request.body;
+    const subCategoryForm = await SubCategory.update(
+      { name, category_id, description, status },
       {
         where: {
           id: request.params.id
         }
       }
     );
-    response.send(success(categoryForm, 'category updated successfully', 201));
+    response.send(success(subCategoryForm, 'sub-category updated successfully', 201));
   } catch (exception) {
     console.log(exception);
     response.send(error(exception.message));
@@ -78,12 +71,12 @@ module.exports.update = async (request, response) => {
 
 module.exports.destroy = async (request, response) => {
   try {
-    const categoryForm = await Category.destroy({
+    const subCategory = await SubCategory.destroy({
       where: {
         id: request.params.id
       }
     });
-    response.send(success(categoryForm, 'category deleted successfully', 204));
+    response.send(success(subCategory, 'sub-category deleted successfully', 204));
   } catch (exception) {
     console.log(exception);
     response.send(error(exception.message));
@@ -93,6 +86,7 @@ module.exports.destroy = async (request, response) => {
 module.exports.validation = () => {
   return [
     body('name', 'Name is Required').exists(),
+    body('category_id', 'Category is Required').exists(),
     body('description', 'Description is Required').exists(),
     body('status', 'Status is Required').exists()
   ];
