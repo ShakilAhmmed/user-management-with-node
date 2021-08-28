@@ -1,6 +1,9 @@
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+const app = express();
+app.use(fileUpload());
+
 require('dotenv').config();
 
 app.use(bodyParser.json());

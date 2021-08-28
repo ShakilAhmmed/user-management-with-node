@@ -4,6 +4,7 @@ const router = express.Router();
 const homeController = require('../controllers/homeController');
 const categoryController = require('../controllers/categoryController');
 const subCategoryController = require('../controllers/subCategoryController');
+const brandController = require('../controllers/brandController');
 
 router.get('', homeController.index);
 
@@ -18,5 +19,8 @@ router.post('/sub-categories', subCategoryController.validation(), subCategoryCo
 router.get('/sub-categories/:id', subCategoryController.edit);
 router.put('/sub-categories/:id', subCategoryController.validation(), subCategoryController.update);
 router.delete('/sub-categories/:id', subCategoryController.destroy);
+
+router.get('/brands', brandController.index);
+router.post('/brands', brandController.validation(), brandController.store);
 
 module.exports = router;
