@@ -1,19 +1,16 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-require("dotenv").config();
+require('dotenv').config();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 const route = require('./router');
 
-
-app.use('/',route);
-
-
+app.use('/api/v1/', route);
 
 //Server
-app.listen(3000,()=>{
-    console.log('Server Connected');
-})
+app.listen(3000, () => {
+  console.log('Server Connected');
+});
