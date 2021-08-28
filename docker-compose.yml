@@ -1,5 +1,19 @@
 version: '3.7'
 services:
+  nginx:
+    image: nginx:alpine
+    container_name: user-management-nginx
+    restart: unless-stopped
+    ports:
+      - '8000:80'
+    volumes:
+      - ./:/var/www/html:cached
+      - ./.docker/nginx:/etc/nginx/conf.d
+    networks:
+      - user-management-network
+    depends_on:
+      - app
+
   app:
     build:
       args:
@@ -11,6 +25,8 @@ services:
     container_name: user-management
     restart: unless-stopped
     working_dir: /var/www/html
+    ports:
+      - 3000:3000
     volumes:
       - ./:/var/www/html:cached
     networks:
