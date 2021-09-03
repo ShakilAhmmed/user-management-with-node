@@ -22,5 +22,7 @@ router.delete('/sub-categories/:id', subCategoryController.destroy);
 
 router.get('/brands', brandController.index);
 router.post('/brands', brandController.validation(), brandController.store);
+router.get('/brands/:id', brandController.edit);
+router.delete('/brands/:id', brandController.destroy);
 
 module.exports = router;
