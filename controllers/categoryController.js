@@ -16,10 +16,10 @@ module.exports.index = async (request, response) => {
 
   try {
     let categories = await Category.findAll({ include: SubCategory });
-    response.status(200).send(success(categories, 'categories fetched successfully'));
+    return response.status(200).send(success(categories, 'categories fetched successfully'));
   } catch (exception) {
     console.log(exception);
-    response.send(error(exception.message));
+    return response.status(500).send(error(exception.message));
   }
 };
 
@@ -27,15 +27,14 @@ module.exports.store = async (request, response) => {
   try {
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
-      response.status(422).json({ errors: errors.array() });
-      return;
+      return response.status(422).json({ errors: errors.array() });
     }
     let { name, description, status } = request.body;
     const categoryForm = await Category.create({ name, description, status });
-    response.status(201).send(success(categoryForm, 'category created successfully', 201));
+    return response.status(201).send(success(categoryForm, 'category created successfully', 201));
   } catch (exception) {
     console.log(exception);
-    response.send(error(exception.message));
+    return response.status(500).send(error(exception.message));
   }
 };
 
@@ -49,7 +48,7 @@ module.exports.edit = async (request, response) => {
     response.send(success(category, 'category fetched successfully'));
   } catch (exception) {
     console.log(exception);
-    response.send(error(exception.message));
+    return response.status(500).send(error(exception.message));
   }
 };
 
@@ -57,8 +56,7 @@ module.exports.update = async (request, response) => {
   try {
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
-      response.status(422).json({ errors: errors.array() });
-      return;
+      return response.status(422).json({ errors: errors.array() });
     }
     let { name, description, status } = request.body;
     const categoryForm = await Category.update(
@@ -69,10 +67,10 @@ module.exports.update = async (request, response) => {
         }
       }
     );
-    response.send(success(categoryForm, 'category updated successfully', 201));
+    return response.send(success(categoryForm, 'category updated successfully', 201));
   } catch (exception) {
     console.log(exception);
-    response.send(error(exception.message));
+    return response.status(500).send(error(exception.message));
   }
 };
 
@@ -83,10 +81,10 @@ module.exports.destroy = async (request, response) => {
         id: request.params.id
       }
     });
-    response.send(success(categoryForm, 'category deleted successfully', 204));
+    return response.send(success(categoryForm, 'category deleted successfully', 204));
   } catch (exception) {
     console.log(exception);
-    response.send(error(exception.message));
+    return response.status(500).send(error(exception.message));
   }
 };
 

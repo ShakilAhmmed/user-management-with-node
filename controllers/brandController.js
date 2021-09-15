@@ -7,10 +7,10 @@ const fileSystem = require('fs');
 module.exports.index = async (request, response) => {
   try {
     let brand = await Brand.findAll();
-    response.status(200).send(success(brand, 'brands fetched successfully'));
+    return response.status(200).send(success(brand, 'brands fetched successfully'));
   } catch (exception) {
     console.log(exception);
-    response.send(error(exception.message));
+    return response.send(error(exception.message));
   }
 };
 
@@ -18,8 +18,7 @@ module.exports.store = async (request, response) => {
   try {
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
-      response.status(422).json({ errors: errors.array() });
-      return;
+      return response.status(422).json({ errors: errors.array() });
     }
     let { name, email, slug, phone, address, status } = request.body;
     let { icon } = request.files;
@@ -27,15 +26,15 @@ module.exports.store = async (request, response) => {
       icon = __dirname + '/public/asstes/images/brands/' + icon.name;
       sampleFile.mv(icon, function (fileUploadError) {
         if (fileUploadError) {
-          response.send(error(fileUploadError.message));
+          return response.send(error(fileUploadError.message));
         }
       });
     }
 
     const brandForm = await Brand.create({ name, email, icon, slug, phone, address, status });
-    response.status(201).send(success(brandForm, 'brand created successfully', 201));
+    return response.status(201).send(success(brandForm, 'brand created successfully', 201));
   } catch (exception) {
-    response.send(error(exception.message));
+    return response.send(error(exception.message));
   }
 };
 
@@ -43,8 +42,7 @@ module.exports.update = async (request, response) => {
   try {
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
-      response.status(422).json({ errors: errors.array() });
-      return;
+      return response.status(422).json({ errors: errors.array() });
     }
 
     let { name, email, slug, phone, address, status } = request.body;
@@ -54,7 +52,7 @@ module.exports.update = async (request, response) => {
       icon = __dirname + '/public/asstes/images/brands/' + icon.name;
       sampleFile.mv(icon, function (fileUploadError) {
         if (fileUploadError) {
-          response.send(error(fileUploadError.message));
+          return response.send(error(fileUploadError.message));
         }
       });
     }
@@ -66,10 +64,10 @@ module.exports.update = async (request, response) => {
         }
       }
     );
-    response.send(success(brandForm, 'brand updated successfully', 201));
+    return response.send(success(brandForm, 'brand updated successfully', 201));
   } catch (exception) {
     console.log(exception);
-    response.send(error(exception.message));
+    return response.send(error(exception.message));
   }
 };
 
@@ -80,10 +78,10 @@ module.exports.edit = async (request, response) => {
         id: request.params.id
       }
     });
-    response.send(success(brand, 'brand fetched successfully'));
+    return response.send(success(brand, 'brand fetched successfully'));
   } catch (exception) {
     console.log(exception);
-    response.send(error(exception.message));
+    return response.send(error(exception.message));
   }
 };
 
@@ -94,10 +92,10 @@ module.exports.destroy = async (request, response) => {
         id: request.params.id
       }
     });
-    response.send(success(brand, 'brand deleted successfully', 204));
+    return response.send(success(brand, 'brand deleted successfully', 204));
   } catch (exception) {
     console.log(exception);
-    response.send(error(exception.message));
+    return response.send(error(exception.message));
   }
 };
 
